@@ -1,5 +1,14 @@
-A simple example of matrix use in OpenGL
+PA2
 ========================================
+
+Will write the shader class for the next projects if needed.
+
+The following user interactions are added for PA2
+
+Menus: Start the spinning,  pause the spinning, and exit the program.
+Keyboard: Spinning of the cube reverses by the space key being pressed.
+Mouse: The cube reverses rotation by left button press.
+
 
 Building This Example
 ---------------------
