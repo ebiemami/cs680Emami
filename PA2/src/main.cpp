@@ -61,7 +61,7 @@ const int SHADER_TEXT_SIZE = 1000;
 
 // Interaction
 void 	menu(int id);
-void 	myMouseFuction(int button, int state, int x, int y);
+void 	mouseFuction(int button, int state, int x, int y);
 bool 	spin = false;
 int 	direction = 1;
 int 	spinDirection = 1;
@@ -75,7 +75,7 @@ int main(int argc, char **argv)
     glutInitWindowSize(w, h);
     // Name and create the Window
     glutCreateWindow("Matrix Example");
-	glutMouseFunc(myMouseFuction);
+	glutMouseFunc(mouseFuction);
 
     // Now that the window is created the GL context is fully set up
     // Because of that we can now initialize GLEW to prepare work with shaders
@@ -96,7 +96,7 @@ int main(int argc, char **argv)
 	glutCreateMenu(menu);
 	glutAddMenuEntry("exit", 1);
 	glutAddMenuEntry("start spin", 2);
-	glutAddMenuEntry("stop spin", 3);
+	glutAddMenuEntry("pause spin", 3);
 	glutAttachMenu(GLUT_RIGHT_BUTTON);
 
     // Initialize all of our resources(shaders, geometry)
@@ -159,30 +159,28 @@ void render()
     glutSwapBuffers();
 }
 
+
 void update()
 {
     //total time
     static float angle = 0.0, spinAngle = 0.0;
     
-    glm::mat4 t, r;
+	glm::mat4 t, r; 
 
     float dt = getDT();// if you have anything moving, use dt.
     
     angle += dt * direction * M_PI/2; //move through 90 degrees a second
     
-    t = glm::translate( glm::mat4(1.0f), glm::vec3(4.0 * sin(angle), 0.0, 4.0 * cos(angle)));
-
-
 	if(spin)
-	{
-		spinAngle += dt * spinDirection * 90;
-		r = glm::rotate(glm::mat4(1.0f), spinAngle, glm::vec3(0.0f, 1.0f, 0.0f));		
-		model = t * r;
-	}
-	else
-		model = t;    
+		spinAngle += dt * spinDirection * 90;		
+
     // Update the state of the scene
-    glutPostRedisplay();//call the display callback
+	
+    t = glm::translate( glm::mat4(1.0f), glm::vec3(4.0 * sin(angle), 0.0, 4.0 * cos(angle)));
+	r = glm::rotate(glm::mat4(1.0f), spinAngle, glm::vec3(0.0f, 1.0f, 0.0f));		
+	model = t * r;
+    
+	glutPostRedisplay();//call the display callback
 }
 
 
@@ -435,7 +433,7 @@ bool readFile(const char* fileName, char* output)
 
 }
 
-void myMouseFuction(int button, int state, int x, int y) 
+void mouseFuction(int button, int state, int x, int y) 
 {
 	if(state == GLUT_DOWN && button == GLUT_LEFT_BUTTON)
 		direction *= -1;
