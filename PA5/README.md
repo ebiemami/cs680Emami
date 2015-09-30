@@ -1,2 +1,2 @@
 
-Please chek Daneil Goodnow`s github repository for our groups project.
+Please check Daneil Goodnow`s repository for our group`s project.
